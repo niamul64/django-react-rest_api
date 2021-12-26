@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+<body>
+      <script>
+            //  My django application handle get response when url: [localhost/status/api] is used 
+            // fatch() API, is used to send the get request or fatch the data 
+            fetch("http://127.0.0.1:8000/status/api/").then(response => response.json()).then(data => console.log(data) )
+            // By using .then we can grab or print on console
+            // first .then: grabing the responsed data as json--> and 2nd then used to print data at console
+            // Now, when runing this file on browser we will see an error 
+            // to solve: search on google--> cross domain chrome or cross domain chrome
+      </script>
+      
+</body>
+</html>
