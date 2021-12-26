@@ -144,7 +144,7 @@ from rest_framework.generics import CreateAPIView
 ```
 class StatusCreateApiView(CreateAPIView): # handle POST request
       # we can insert data in model table by creating this API
-      queryset = Status.objects.all() # at which tablie we want to insert the data.
+      queryset = Status.objects.all() # at which table we want to insert the data.
       serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
 ```
 3. Now, urls.py
@@ -157,4 +157,136 @@ path('status_create/', views.StatusCreateApiView.as_view(),name="status_create")
 
 ### TEST the RESPONSE by HTML JS frontend (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. 'for version2')
 
-5. 
+
+ ## version3: RetrieveAPIView -->see the detail of an particular obj. 
+ #### Here important point is--> we have to accept a primary key through urls.py file
+ 1. Goto views.py, import and write class view:
+```
+from rest_framework.generics import RetrieveAPIView # RetrieveAPIView --> details view API--> show details of an obj
+
+class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 
+      queryset = Status.objects.all() # from which table we want to show the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+```
+2. urls.py: Here important point is-->we have to accept a primary key through urls.py file
+```
+path('status_Details/<pk>', views.StatusDetailAPIView.as_view(),name="status_Details"),
+```
+3. Now, if we goto the browser and use url: http://127.0.0.1:8000/apiV1/status_Details/1
+It will send a get request to see the details of primary key=1
+<img src="Test API RESPONSE BY HTML JS/details view api browser url.JPG" alt="alt" width="100%">
+
+## version4:( lookup_field ) Now we are using the primary key value to se the details of a obj. 
+### But, what if we want to see the details of a object by searching another field, (not primary key field)
+1. need to change the 'StatusDetailAPIView(RetrieveAPIView)' view (use: lookup_field)
+```
+class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 
+      queryset = Status.objects.all() # from which table we want to show the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id' # need to match with urls.py file's accepting key value variable
+```
+2. urls.py :
+```
+path('status_Details/<id>', views.StatusDetailAPIView.as_view(),name="status_Details"), 
+# here the receiving key mast be 'id', as in views, I mentioned it as lookup_field 
+```
+## version5: lookup_field, another approch, using 'get_object' method
+1. now at views-> inside 'StatusDetailAPIView(RetrieveAPIView)' class re-write the get_object class:
+```
+## in urls.py file:
+path('status_Details/<slug>', views.StatusDetailAPIView.as_view(),name="status_Details"),
+
+# in views.py
+class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 
+      queryset = Status.objects.all() # from which table we want to show the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      # lookup_field= 'id' # Now we are not using this. we are writing a function
+      # By lookup_field--> we are mentioning, which field it will look for the matching and send response
+
+      def get_object(self, *args, **kwargs): # args= arguments, **kwargs=keyword-arguments
+            kwargs= self.kwargs # let's save the kwargs in a variable and print
+            print(kwargs) # printing on terminal
+
+## we will see in terminal:
+# {'id': '1'} 
+# means we are receiving the id value by '**kwargs', which we are sending through url patern:(http://127.0.0.1:8000/apiV1/status_Details/1)
+
+```
+
+2. if we change the variable name in urls.py: (like: 'slag' ), in the terminal: we will see output: {'slug': '3'}
+
+```
+## in urls.py file:
+path('status_Details/<slug>', views.StatusDetailAPIView.as_view(),name="status_Details"),
+
+# in the terminal: we will see output
+# output: {'slug': '3'}
+```
+#### so, by using 'get_object' method we are flaxible to use any field name in urls.py
+
+3. Now, to send response, we need to add more code to the 'get_object' method:
+```
+# now in urls.py:
+path('status_details/<id>', views.StatusDetailAPIView.as_view(),name="status_details"),
+
+# in views.py
+class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 
+      queryset = Status.objects.all() # from which table we want to show the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+
+      def get_object(self, *args, **kwargs): # args= arguments, **kwargs=keyword-arguments
+            kwargs= self.kwargs # let's save the kwargs in a variable(like: id), we are getting the keyvalue by 'kwargs'
+            # The key value comming as dictionary (like this: {'id': '1'} )
+            kw_id= kwargs.get('id') # geting the value of 'id' form dictionary
+            return Status.objects.get(id= kw_id) #using id to search details, based on the url request 'id'
+            # Status is the model class
+```
+4. Now, if we use url on browser: http://127.0.0.1:8000/apiV1/status_details/2
+
+<img src="Test API RESPONSE BY HTML JS/using get_object method of detailAPIView.JPG" alt="alt" width="100%">
+
+# But instead of using 'get_object' method, version4: using 'lookup_field' is enough.
+
+
+## version6:(PUT/patch request) UPDATE API VIEW, almost like create + detail-> togather in action
+### put want full object, patch want only the changed obj. (search more about this on google)
+1. import and views.py-->
+```
+from rest_framework.generics import UpdateAPIView
+
+class StatusUpdateApiView(UpdateAPIView): # handle PUT/patch request
+      # we can updating data in model table by creating this API
+      queryset = Status.objects.all() # at which table we want to update the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id'
+      # we can use this lookup fiel(if we don't use it then primary key will automatically used)
+```
+2. urls.py-->
+```
+path('status_Update/<id>', views.StatusUpdateApiView.as_view(),name="status_Update"),
+```
+Now, if we use url : http://127.0.0.1:8000/apiV1/status_Update/2
+we can put the value and update the existing values.
+<img src="Test API RESPONSE BY HTML JS/UpdateView API from browser.JPG" alt="alt" width="100%">
+
+### TEST the RESPONSE by HTML JS frontend, almost like version2. just we need to send an obj 'id' (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. almost 'for version2')
+
+## version7: DELETE api-->
+1. import, views.py
+```
+from rest_framework.generics import DestroyAPIView
+
+class StatusDeleteView(DestroyAPIView): # handle DELETE request
+      queryset = Status.objects.all() # at which table we want to delete the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id'
+      # we can use this lookup fiel(if we don't use it then primary key will automatically used)
+```
+2. urls.py:
+```
+path('status_Delete/<id>', views.StatusDeleteView.as_view(),name="status_Delete"),
+```
+Now, if we use url at browser: http://127.0.0.1:8000/apiV1/status_Delete/2
+#### the object with id will be deleted from 'Status' model class table , if we click delete button
+
+# TEST the RESPONSE by HTML JS frontend for--> detail, update, delete (see:'TEST the RESPONSE by HTML JS.md' folder of this repo.)

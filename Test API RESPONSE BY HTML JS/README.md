@@ -27,7 +27,7 @@
 
             // fatch() API, is used to send the get request or fatch the data 
             fetch("http://127.0.0.1:8000/status/api/").then(response => response.json()).then(data => console.log(data) )
-            // By using .then we can grab or print on console
+            // By using .then we can grab data or print on console
             // first .then: grabing the responsed data as json--> and 2nd then used to print data at console
             // Now, when runing this file on browser we will see an error 
             // to solve: search on google--> cross domain chrome or cross domain chrome
@@ -50,7 +50,7 @@ class StatusSerializer(serializers.ModelSerializer):
 
             // fatch() API, is used to send the get request or fatch the data 
             fetch("http://127.0.0.1:8000/apiV1/status_list/").then(response => response.json()).then(data => console.log(data) )
-            // By using .then we can grab or print on console
+            // By using .then we can grab data or print on console.
             // first .then: grabing the responsed data as json--> and 2nd then used to print data at console
             // Now, when runing this file on browser we will see an error 
             // to solve: search on google--> cross domain chrome or cross domain chrome
@@ -81,7 +81,7 @@ class StatusSerializer(serializers.ModelSerializer):
                   },// we can easily find the content type by using the url 'http://127.0.0.1:8000/apiV1/status_create/' at browser
             }
             ).then(response => response.json()).then(data => console.log(data) )
-            // By using .then we can grab or print on console
+            // By using .then we can grab data or print on console.
             // first .then: grabing the responsed data as json--> and 2nd then used to print data at console
             // Now, when runing this file on browser we will see an error 
             // to solve: search on google--> cross domain chrome or cross domain chrome
@@ -94,3 +94,77 @@ class StatusSerializer(serializers.ModelSerializer):
 
 #### Now, if we use version2 code, then we will see a new entry have done in our django model table. 
  
+
+# Now, from here we will use 'asios'(from react frame work).
+#### For crud APIs: search on google: axious, will see the github link first, goto the link and copy script (Using unpkg CDN:) to access onlie axious features onlie.
+### CDN: <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+1. Now, we will create a js file to keep our code 'script.js'
+```
+<!-- inside html--> -->
+<script src="script.js"></script> 
+```
+### Now,
+1.'axios.get' for get request.
+2.'axios.post' for post request. 
+3. 'axios.put' for put request.
+
+### Now, we will see a error, when first time at the browser console for using html in live server and django togather. this is ocures, becase, our django running on a port and this live server ogf html page is running on another port.
+1. solv error: install django cors headers on django project env (see: django-cors-headers doc by serching on google )
+```
+$ pip install django-cors-headers
+```
+2. Now goto settings.py and include at INSTALLED_APPS --> , MIDDLEWARE-->
+```
+INSTALLED_APPS = [
+      ..........,
+    "corsheaders",
+]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware", #This one have to be at the top of the all middleWare
+    ........,
+    "django.middleware.common.CommonMiddleware", # this one should already exist. but if not then include.
+]
+
+CORS_ORIGIN_ALLOW_ALL= True # include this too, just under the middleWare list
+```
+
+
+### for version4: detail views with ( lookup_field )
+1. inside the script.js file--> call 'axios.get' for get request.
+```
+
+///'asios'(from react frame work)
+axios.get("http://127.0.0.1:8000/apiV1/status_Details/").then(response => console.log(response) )
+// By using .then we can grab data or printing on browser consle
+```
+2. Now open the html file as live server. and see in console of the browser.
+3. Now, we will see a error, first time. this is ocures, becase, our django running on a port and this live server ogf html page is running on another port.
+4. solv error: install django cors headers on django project env (see: django-cors-headers doc by serching on google )
+```
+$ pip install django-cors-headers
+```
+5. Now goto settings.py and include at INSTALLED_APPS --> , MIDDLEWARE-->
+```
+INSTALLED_APPS = [
+      ..........,
+    "corsheaders",
+]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware", #This one have to be at the top of the all middleWare
+    ........,
+    "django.middleware.common.CommonMiddleware", # this one should already exist. but if not then include.
+]
+
+CORS_ORIGIN_ALLOW_ALL= True # include this too, just under the middleWare list
+```
+#### now we will not see any error at browser console:
+6. Run the django server and HTML on live server.
+7. Now, reload the HTML document, and Now we are not going to see the error. and we will have our objects.
+<img src="Seeing list using js with asios.JPG" alt="alt" width="100%">
+
+### for version3: (CreateAPIView) by using 'asios'(from react frame work)
+```
+
+```

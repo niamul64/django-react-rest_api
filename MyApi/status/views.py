@@ -1,12 +1,13 @@
 
 from django.db.models import query
 from django.db.models.query import QuerySet
+from django.views import generic
 from status.models import Status          # model
 from .serializers import StatusSerializer # serializer based on Status model
 
 from rest_framework.views import APIView     # jeson data handeling
 from rest_framework.response import Response # handeling response
-from rest_framework.generics import ListAPIView,CreateAPIView 
+from rest_framework.generics import ListAPIView,CreateAPIView ,RetrieveAPIView,UpdateAPIView,DestroyAPIView
 
 # Create your views here.
 
@@ -30,8 +31,40 @@ class StatusListApiView(ListAPIView): # will do the same work(like: StatusAPIVie
       
 class StatusCreateApiView(CreateAPIView): # handle POST request
       # we can insert data in model table by creating this API
-      queryset = Status.objects.all() # at which tablie we want to insert the data.
+      queryset = Status.objects.all() # at which table we want to insert the data.
       serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
       
       
+class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 
+      queryset = Status.objects.all() # from which table we want to show the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id' # need to match with urls.py file's accepting key value variable
+
+      # By lookup_field--> we are mentioning, which field it will look for the matching and send response
+      # def get_object(self, *args, **kwargs): # args= arguments, **kwargs=keyword-arguments
+      #       kwargs= self.kwargs # let's save the kwargs in a variable(like: id), we are getting the keyvalue by 'kwargs'
+      #       # The key value comming as dictionary (like this: {'id': '1'} )
+      #       kw_id= kwargs.get('id') # geting the value of 'id' form dictionary
+      #       return Status.objects.get(id= kw_id) #using id to search details, based on the url request 'id'
+      #       # Status is the model class
+            
+      #       #print(kwargs) # printing on terminal
+      # ## if we print kwargs--> see in terminal:
+      # # {'id': '1'} # means we are receiving the id value, which we are sending through url patern:(http://127.0.0.1:8000/apiV1/status_Details/1)
+      # # if we change the variable name in urls.py: (like: 'slag' )
+      # # # in the terminal: we will see output: {'slug': '3'}
+      # # so, by using 'get_object' method we are flaxible to use any field name in urls.py
+
       
+class StatusUpdateApiView(UpdateAPIView): # handle PUT request
+      # we can updating data in model table by creating this API
+      queryset = Status.objects.all() # at which table we want to update the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id'
+      # we can use this lookup fiel(if we don't use it then primary key will automatically used)
+      
+class StatusDeleteView(DestroyAPIView): # handle DELETE request
+      queryset = Status.objects.all() # at which table we want to delete the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id'
+      # we can use this lookup fiel(if we don't use it then primary key will automatically used)

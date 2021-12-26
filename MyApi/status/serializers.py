@@ -5,4 +5,4 @@ from .models import Status #importing model
 class StatusSerializer(serializers.ModelSerializer):
       class Meta:
             model= Status # which model data it will serialize
-            fields= ['pk','user','content','image'] # which fields will be serialized
+            fields= ['id','user','content','image'] # which fields will be serialized
