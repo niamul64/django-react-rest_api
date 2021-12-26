@@ -19,7 +19,7 @@ INSTALLED_APPS = [
 <hr>
 
 
-## RESPONSE: (get request)
+# RESPONSE: (get request)
 ###  REST API serializer--> see (json--> python obj , python obj--> jeson)
 #### what is serializer: REST API always handel data in. JSON format. we will have data from a frontend as JSON format.
 #### and we need to save the data in database. and if any one wants to see information from database, show as JSON formate.
@@ -94,7 +94,7 @@ we will see:
 
 ### TEST the RESPONSE by HTML JS frontend (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. 'for version1')
 
-### version2: Now, use listAPIView to make views: (less code than version1)
+## version2: Now, use listAPIView to make views: (less code than version1)
 1. Now, lets call our previous api as version1 one and this is version 2. lets, change the urls.py 
 ```
 # in main urls.py:
@@ -133,3 +133,28 @@ path('status_list/', views.StatusListApiView.as_view(),name="status_list"),
 
 ### TEST the RESPONSE by HTML JS frontend (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. 'for version2' )
 
+# RESPONSE: (POST request)
+## version3: CreateAPIView, we can insert data at table by this API
+1. import--> Import in views.py
+```
+# import in views.py
+from rest_framework.generics import CreateAPIView
+```
+2. Now, actual view at views.py
+```
+class StatusCreateApiView(CreateAPIView): # handle POST request
+      # we can insert data in model table by creating this API
+      queryset = Status.objects.all() # at which tablie we want to insert the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+```
+3. Now, urls.py
+```
+path('status_create/', views.StatusCreateApiView.as_view(),name="status_create"),
+```
+4. Now, if we goto the browser and use url: http://127.0.0.1:8000/apiV1/status_create/
+
+<img src="Test API RESPONSE BY HTML JS/CreateViewAPI.JPG" alt="alt" width="100%">
+
+### TEST the RESPONSE by HTML JS frontend (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. 'for version2')
+
+5. 

@@ -1,11 +1,13 @@
 
+from django.db.models import query
 from django.db.models.query import QuerySet
 from status.models import Status          # model
 from .serializers import StatusSerializer # serializer based on Status model
 
 from rest_framework.views import APIView     # jeson data handeling
 from rest_framework.response import Response # handeling response
-from rest_framework.generics import ListAPIView 
+from rest_framework.generics import ListAPIView,CreateAPIView 
+
 # Create your views here.
 
 
@@ -22,6 +24,14 @@ class StatusListApiView(ListAPIView): # will do the same work(like: StatusAPIVie
       # 'queryset' : defines, on which model/table we are doing query and collecting obj
       
       # Now, mention the serializer class, that we are using to serialize the the object.
-      serializer_class= StatusSerializer # StatusSerializer is the class we made in serializer.py
+      serializer_class= StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
       
       # rest of the things will be handeled by the class Automatically
+      
+class StatusCreateApiView(CreateAPIView): # handle POST request
+      # we can insert data in model table by creating this API
+      queryset = Status.objects.all() # at which tablie we want to insert the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      
+      
+      
