@@ -2,6 +2,7 @@
 from django.db.models import query
 from django.db.models.query import QuerySet
 from django.views import generic
+from rest_framework import parsers
 from status.models import Status          # model
 from .serializers import StatusSerializer # serializer based on Status model
 
@@ -9,7 +10,37 @@ from rest_framework.views import APIView     # jeson data handeling
 from rest_framework.response import Response # handeling response
 from rest_framework.generics import ListAPIView,CreateAPIView ,RetrieveAPIView,UpdateAPIView,DestroyAPIView
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin ,DestroyModelMixin
+from rest_framework.parsers import FormParser, MultiPartParser
 # Create your views here.
+
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+############# (advance)  Without  using the Mixin
+
+class List_Create_APIView(ListCreateAPIView): # will work for GET and POST Request
+      queryset= Status.objects.all() # grab all data from 'Status' table
+      # 'queryset' : defines, on which model/table we are doing query and collecting obj
+      
+      # Now, mention the serializer class, that we are using to serialize the the object.
+      serializer_class= StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      
+      # parser class for image upload:
+      parser_classes=[parsers.FormParser,parsers.MultiPartParser]
+      
+      
+class Details_Update_Delete_APIView(RetrieveUpdateDestroyAPIView): 
+      queryset= Status.objects.all() # grab all data from 'Status' table
+      # 'queryset' : defines, on which model/table we are doing query and collecting obj
+      
+      # Now, mention the serializer class, that we are using to serialize the the object.
+      serializer_class= StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id' # need to match with urls.py file's accepting key value variable
+      # By lookup_field--> we are mentioning, which field it will look for the matching and send response
+      
+      # parser class for image upload:
+      parser_classes=[parsers.FormParser,parsers.MultiPartParser]
+      
+############ (advance)  Without  using the Mixin (END)
+
 
 
 #### using Mixin
@@ -35,7 +66,7 @@ class Status_Details_Update_Delete_view_api(RetrieveAPIView): # hendle get reque
       def delete(self, request, *args, **kwargs): # this fuction will anable the delete request(delete)
             return self.destroy(request,  *args, **kwargs)     
 
-
+#### using Mixin END
 
 
 
@@ -61,6 +92,7 @@ class StatusCreateApiView(CreateAPIView): # handle POST request
       # we can insert data in model table by creating this API
       queryset = Status.objects.all() # at which table we want to insert the data.
       serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+
       
       
 class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 

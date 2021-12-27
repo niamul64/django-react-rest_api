@@ -297,3 +297,7 @@ Now, if we use url at browser: http://127.0.0.1:8000/apiV1/status_Delete/2
 # 1. See the file 'rest frame work part 2 Mixing.md'.
 
 # 2. More Advance: see--> 'rest framework part 3 ADVANCEDLevel.md'
+
+<br><br><hr>
+
+# File Upload or image upload using Rest_API : (see 'File or img upload using REST API.md' file in this reposetory)

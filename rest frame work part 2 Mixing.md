@@ -83,6 +83,7 @@ class Status_Details_Update_Delete_view_api(RetrieveAPIView): # hendle get reque
       queryset = Status.objects.all() # from which table we want to show the data.
       serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
       lookup_field= 'id' # need to match with urls.py file's accepting key value variable
+      # By lookup_field--> we are mentioning, which field it will look for the matching and send response
 
       def put(self, request, *args, **kwargs): # this fuction will anable the update request(PUT)
             return self.update(request,  *args, **kwargs) #if we want PATCH request the. partial_update()
@@ -92,3 +93,14 @@ class Status_Details_Update_Delete_view_api(RetrieveAPIView): # hendle get reque
 ```
 ## Now we can use url: status/<id> --> AS-> details(get), delete(delete), update (put/patch)--> request
 <img src="Test API RESPONSE BY HTML JS/details,delete and update request using Mixing.JPG" alt="alt" width="70%">
+
+<br>
+<br>
+
+# Now, we can DO more better than this: Work will more easy
+# See 'rest frameWork part 3 (Advance level).md' file for the ultimate REst frame work implimentation
+
+
+<br><br><hr>
+
+# File Upload or image upload using Rest_API : (see 'File or img upload using REST API.md' file in this reposetory)
