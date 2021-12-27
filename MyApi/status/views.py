@@ -8,8 +8,11 @@ from .serializers import StatusSerializer # serializer based on Status model
 from rest_framework.views import APIView     # jeson data handeling
 from rest_framework.response import Response # handeling response
 from rest_framework.generics import ListAPIView,CreateAPIView ,RetrieveAPIView,UpdateAPIView,DestroyAPIView
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin ,DestroyModelMixin
 # Create your views here.
+
+
+#### using Mixin
 class Status_ListView_and_CreateView(CreateModelMixin, ListAPIView): 
       queryset= Status.objects.all() # grab all data from 'Status' table
       # 'queryset' : defines, on which model/table we are doing query and collecting obj
@@ -19,6 +22,21 @@ class Status_ListView_and_CreateView(CreateModelMixin, ListAPIView):
       
       def post(self, request, *args, **kwargs): # this fuction will anable the Create request(Post)
             return self.create(request,  *args, **kwargs)
+
+
+class Status_Details_Update_Delete_view_api(RetrieveAPIView): # hendle get request to show detail of a particular obj, of a model table 
+      queryset = Status.objects.all() # from which table we want to show the data.
+      serializer_class = StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      lookup_field= 'id' # need to match with urls.py file's accepting key value variable
+
+      def put(self, request, *args, **kwargs): # this fuction will anable the update request(PUT)
+            return self.update(request,  *args, **kwargs) #if we want PATCH request the. partial_update()
+      
+      def delete(self, request, *args, **kwargs): # this fuction will anable the delete request(delete)
+            return self.destroy(request,  *args, **kwargs)     
+
+
+
 
 
 
