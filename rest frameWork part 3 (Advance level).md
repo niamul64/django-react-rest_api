@@ -2,6 +2,10 @@
 ### we already have: ListCreateAPIView, RetrieveUpdateDestroyAPIView --> classes
 See official doc of django REST frame work: https://www.django-rest-framework.org/api-guide/generic-views/#updatemodelmixin
 
+<hr>
+see : rest frame work part 4 for the crud application using router and viewsets (only one view needed)
+<hr>
+
 ```
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 

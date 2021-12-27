@@ -14,8 +14,29 @@ from rest_framework.parsers import FormParser, MultiPartParser
 # Create your views here.
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-############# (advance)  Without  using the Mixin
 
+
+from rest_framework.viewsets import ModelViewSet
+
+# we can do the CRUD operation by only usinf this one function with viewsets (Start)
+class CRUDViewSets(ModelViewSet): # ModelViewSet will help: to set CRUD operation on the model table we are defining here
+      
+      queryset= Status.objects.all() # grab all data from 'Status' table
+      # 'queryset' : defines, on which model/table we are doing query and collecting obj
+      
+      # Now, mention the serializer class, that we are using to serialize the the object.
+      serializer_class= StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      
+      # parser class for image upload: as we are having img field
+      parser_classes=[parsers.FormParser,parsers.MultiPartParser]
+# we can do the CRUD operation by only usinf this one function with viewsets (End)
+
+
+
+
+
+
+############ (advance)  Without  using the Mixin
 class List_Create_APIView(ListCreateAPIView): # will work for GET and POST Request
       queryset= Status.objects.all() # grab all data from 'Status' table
       # 'queryset' : defines, on which model/table we are doing query and collecting obj

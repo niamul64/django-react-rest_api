@@ -11,7 +11,9 @@ step1: status/            ->  List(get), Create(post)
 step2: status/<id>        -> details(get), delete(delete), update (put/patch)
 
 ```
-
+<hr>
+see : rest frame work part 4 for the crud application using router and viewsets (only one view needed)
+<hr>
 
 # step1: status/ --> ListViewAPI(get), CreateViewAPI(post)
 1. Remove all the views, and urls for these tasks handlers.

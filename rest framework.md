@@ -17,7 +17,8 @@ INSTALLED_APPS = [
 ]
 ```
 <hr>
-
+see : rest frame work part 4 for the crud application using router and viewsets (only one view needed)
+<hr>
 
 # RESPONSE: (get request)
 ###  REST API serializer--> see (json--> python obj , python obj--> jeson)
