@@ -158,7 +158,7 @@ path('status_create/', views.StatusCreateApiView.as_view(),name="status_create")
 ### TEST the RESPONSE by HTML JS frontend (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. 'for version2')
 
 
- ## version3: RetrieveAPIView -->see the detail of an particular obj. 
+ ## version4:(details API) RetrieveAPIView -->see the detail of an particular obj. 
  #### Here important point is--> we have to accept a primary key through urls.py file
  1. Goto views.py, import and write class view:
 ```
@@ -176,7 +176,7 @@ path('status_Details/<pk>', views.StatusDetailAPIView.as_view(),name="status_Det
 It will send a get request to see the details of primary key=1
 <img src="Test API RESPONSE BY HTML JS/details view api browser url.JPG" alt="alt" width="100%">
 
-## version4:( lookup_field ) Now we are using the primary key value to se the details of a obj. 
+## version5:(details API) RetrieveAPIView --> ( lookup_field ) Now we are using the primary key value to se the details of a obj. 
 ### But, what if we want to see the details of a object by searching another field, (not primary key field)
 1. need to change the 'StatusDetailAPIView(RetrieveAPIView)' view (use: lookup_field)
 ```
@@ -190,7 +190,7 @@ class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail 
 path('status_Details/<id>', views.StatusDetailAPIView.as_view(),name="status_Details"), 
 # here the receiving key mast be 'id', as in views, I mentioned it as lookup_field 
 ```
-## version5: lookup_field, another approch, using 'get_object' method
+## version6:(details API) RetrieveAPIView --> lookup_field, another approch, using 'get_object' method
 1. now at views-> inside 'StatusDetailAPIView(RetrieveAPIView)' class re-write the get_object class:
 ```
 ## in urls.py file:
@@ -248,7 +248,7 @@ class StatusDetailAPIView(RetrieveAPIView): # hendle get request to show detail 
 # But instead of using 'get_object' method, version4: using 'lookup_field' is enough.
 
 
-## version6:(PUT/patch request) UPDATE API VIEW, almost like create + detail-> togather in action
+## version7:(PUT/patch request) UPDATE API VIEW, almost like create + detail-> togather in action
 ### put want full object, patch want only the changed obj. (search more about this on google)
 1. import and views.py-->
 ```
@@ -271,7 +271,7 @@ we can put the value and update the existing values.
 
 ### TEST the RESPONSE by HTML JS frontend, almost like version2. just we need to send an obj 'id' (see:'TEST the RESPONSE by HTML JS.md' folder of this repo. almost 'for version2')
 
-## version7: DELETE api-->
+## version8: DELETE api-->
 1. import, views.py
 ```
 from rest_framework.generics import DestroyAPIView
