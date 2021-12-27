@@ -102,6 +102,17 @@ function handleSubmit(e){ // recieve a event through 'e'
 
 
 ```
+# Now, For Update: just need to use axios.put instead of axios.post and need to send a id with the link.
+```
+// the main part where change:
+axios.put("http://127.0.0.1:8000/apiV1/status/10", form_data,{ // sending the body to the create view url
+            headers:{
+                  "Content-Type" :"multipart/form-data" // as we are sending image file, 
+            }
+      }).then(response=> response.data) // sending the request
+      .then(data => console.log(res))
+```
+
 <hr>
 
 # full js code:

@@ -94,3 +94,8 @@ we will see:
 <br><br><hr>
 
 # File Upload or image upload using Rest_API : (see 'File or img upload using REST API.md' file in this reposetory)
+
+<br><br><br>
+<hr>
+
+# we can clean image data, after delete or update operation(see: 'image data cleaning, after delete or update operation.md' file)
