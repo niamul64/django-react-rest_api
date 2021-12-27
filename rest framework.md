@@ -289,4 +289,11 @@ path('status_Delete/<id>', views.StatusDeleteView.as_view(),name="status_Delete"
 Now, if we use url at browser: http://127.0.0.1:8000/apiV1/status_Delete/2
 #### the object with id will be deleted from 'Status' model class table , if we click delete button
 
-# TEST the RESPONSE by HTML JS frontend for--> detail, update, delete (see:'TEST the RESPONSE by HTML JS.md' folder of this repo.)
+## TEST the RESPONSE by HTML JS frontend for--> detail, update, delete (see:'TEST the RESPONSE by HTML JS.md' folder of this repo.)
+
+
+# (Advance) Now, these are all the basic use of Django-rest API. But we can make even better. (by using Mixing)
+# Till now we have used a lot of urls to handle the a specific operation. Now, by using Mixing we can do it more better
+# 1. See the file 'rest frame work part 2 Mixing.md'.
+
+# 2. More Advance: see--> 'rest framework part 3 ADVANCEDLevel.md'

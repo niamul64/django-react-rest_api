@@ -230,7 +230,7 @@ let update_statuss = { //making a js object for JSON body
       image: null
 } // JSON BODY closed
 
-axios.put("http://127.0.0.1:8000/apiV1/status_Update/4/",
+axios.put("http://127.0.0.1:8000/apiV1/status_Update/4",
       update_statuss,// sending the body
       {
             headers: // specifying the content type
@@ -242,7 +242,7 @@ axios.put("http://127.0.0.1:8000/apiV1/status_Update/4/",
 
 ).then(response => console.log(response))
 ```
-#### patch request, just send the the changed value
+#### patch request, just send the the value we want to change.
 ```
 // patch request, just  send the value, we want to update:
 let update_statuss = { //making a js object for JSON body
@@ -250,7 +250,7 @@ let update_statuss = { //making a js object for JSON body
       content: "i am from js file, AXIOS using for update"
 } // JSON BODY closed
 
-axios.patch("http://127.0.0.1:8000/apiV1/status_Update/4/",
+axios.patch("http://127.0.0.1:8000/apiV1/status_Update/4",
       update_statuss,// sending the body
       {
             headers: // specifying the content type
@@ -261,6 +261,4 @@ axios.patch("http://127.0.0.1:8000/apiV1/status_Update/4/",
       ///2. Now, if we have only to user object.(user is a foreign key value, we are not inserting from here, just mentioning) and we are sending 100 for user value the this code will throw an exception error. so we need to catch the error.
 
 ).then(response => console.log(response))
-
-
 ```

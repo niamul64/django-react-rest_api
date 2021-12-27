@@ -8,8 +8,18 @@ from .serializers import StatusSerializer # serializer based on Status model
 from rest_framework.views import APIView     # jeson data handeling
 from rest_framework.response import Response # handeling response
 from rest_framework.generics import ListAPIView,CreateAPIView ,RetrieveAPIView,UpdateAPIView,DestroyAPIView
-
+from rest_framework.mixins import CreateModelMixin
 # Create your views here.
+class Status_ListView_and_CreateView(CreateModelMixin, ListAPIView): 
+      queryset= Status.objects.all() # grab all data from 'Status' table
+      # 'queryset' : defines, on which model/table we are doing query and collecting obj
+      
+      # Now, mention the serializer class, that we are using to serialize the the object.
+      serializer_class= StatusSerializer # StatusSerializer is the class we made in serializer.py to serialize the object
+      
+      def post(self, request, *args, **kwargs): # this fuction will anable the Create request(Post)
+            return self.create(request,  *args, **kwargs)
+
 
 
 # its a built in class based view to handel response and serve data as json. (provided by django restFramework)
